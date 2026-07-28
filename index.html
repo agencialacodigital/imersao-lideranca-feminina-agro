@@ -996,7 +996,7 @@ src="https://www.facebook.com/tr?id=1927456418103273&ev=PageView&noscript=1"
       </div>
       <div class="modal-field">
         <label for="modal-telefone">Telefone / WhatsApp</label>
-        <input type="tel" id="modal-telefone" name="telefone" placeholder="(00) 00000-0000" required>
+        <input type="tel" id="modal-telefone" name="telefone" placeholder="(00) 00000-0000" inputmode="numeric" maxlength="15" required>
       </div>
       <button type="submit" class="btn-primary">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -1047,6 +1047,23 @@ src="https://www.facebook.com/tr?id=1927456418103273&ev=PageView&noscript=1"
   const modalOverlay = document.getElementById('modal-overlay');
   const modalForm = document.getElementById('modal-form');
   const modalCloseBtn = document.getElementById('modal-close');
+  const modalTelefone = document.getElementById('modal-telefone');
+
+  // Máscara do telefone: (00) 00000-0000
+  modalTelefone.addEventListener('input', function(e){
+    let digits = e.target.value.replace(/\D/g, '').slice(0, 11);
+    let formatted = digits;
+    if(digits.length > 0){
+      formatted = '(' + digits.slice(0, 2);
+    }
+    if(digits.length >= 3){
+      formatted += ') ' + digits.slice(2, 7);
+    }
+    if(digits.length >= 8){
+      formatted += '-' + digits.slice(7, 11);
+    }
+    e.target.value = formatted;
+  });
 
   function openModal(){
     modalOverlay.classList.add('active');
